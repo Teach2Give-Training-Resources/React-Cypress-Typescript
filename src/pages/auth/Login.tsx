@@ -66,9 +66,10 @@ function Login() {
             <div className="w-full max-w-lg p-8 rounded-xl shadow-lg bg-white">
                 <h1 className="text-3xl font-bold mb-6 text-center">Login to Your Account</h1>
                 {/* Display any error messages here if needed */}
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" data-test="login-form">
 
                     <input
+                        data-test="login-email-input"
                         type="email"
                         {...register('email')}
                         placeholder="Email"
@@ -80,6 +81,7 @@ function Login() {
                     )}
 
                     <input
+                        data-test="login-password-input"
                         type="password"
                         {...register('password')}
                         placeholder="Password"
@@ -90,7 +92,12 @@ function Login() {
                     )}
 
 
-                    <button type="submit" className="btn btn-primary w-full mt-4" disabled={isLoading}>
+                    <button
+                        data-test="login-submit-button"
+                        type="submit"
+                        className="btn btn-primary w-full mt-4"
+                        disabled={isLoading}
+                    >
                         {isLoading ? (
                             <>
                                 <span className="loading loading-spinner text-primary" /> Logining...

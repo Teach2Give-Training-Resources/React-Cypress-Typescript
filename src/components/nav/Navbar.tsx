@@ -13,15 +13,17 @@ const Navbar = () => {
             <div className="navbar bg-gray-300 shadow-sm">
                 <div className="navbar-start">
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" data-test="todo-mobile-menu-bars">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
                         </div>
                         <ul
                             // tabIndex={0}
-                            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow text-base-content bg-gray-700 h-[60vh]">
+                            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow text-base-content bg-gray-700 h-[60vh]"
+                            data-test="todo-ul-menu">
                             <ul className="menu  px-1">
                                 <li className="font-bold text-lg">
                                     <NavLink to="/">Home</NavLink>
+                                    {/* <a href="/"></a> */}
                                 </li>
                                 <li className="font-bold text-lg">
                                     <NavLink to="/about">About</NavLink>
@@ -70,15 +72,15 @@ const Navbar = () => {
                 <div className="navbar-end">
                     <div className='flex gap-4 mr-4'>
                         {!userToken && (
-                                    <>
-                                        <li className="font-bold text-lg list-none">
-                                            <NavLink to="/register">Register</NavLink>
-                                        </li>
-                                        <li className="font-bold text-lg list-none">
-                                            <NavLink to="/login">Login</NavLink>
-                                        </li>
-                                    </>
-                                )}
+                            <>
+                                <li className="font-bold text-lg list-none">
+                                    <NavLink to="/register">Register</NavLink>
+                                </li>
+                                <li className="font-bold text-lg list-none">
+                                    <NavLink to="/login">Login</NavLink>
+                                </li>
+                            </>
+                        )}
                     </div>
                     <a className="btn">Profile</a>
                 </div>
