@@ -24,29 +24,24 @@ describe("signup form tests", () => {
         // Fill the form using data-test attributes
         cy.getDataTest('signup-firstname').as('firstNameInput')
         cy.get('@firstNameInput')
-            .should('be.visible')
-            .type('TestUser');
+            .type('TestUser')
 
         cy.getDataTest('signup-lastname').as('lastNameInput')
         cy.get('@lastNameInput')
-            .should('be.visible')
-            .type('AdminTester');
+            .type('AdminTester')
 
         cy.getDataTest('signup-email').as('emailInput')
         cy.get('@emailInput')
-            .should('be.visible')
             .should('have.attr', 'type', 'email')
-            .type('kemboi.brian@teach2give.com');
+            .type('kemboi.brian@teach2give.com')
 
         cy.getDataTest('signup-password').as('passwordInput')
         cy.get('@passwordInput')
-            .should('be.visible')
             .should('have.attr', 'type', 'password')
             .type('mypass123');
 
         cy.getDataTest('signup-confirmpassword').as('confirmPasswordInput')
         cy.get('@confirmPasswordInput')
-            .should('be.visible')
             .should('have.attr', 'type', 'password')
             .type('mypass123');
 
@@ -55,37 +50,40 @@ describe("signup form tests", () => {
         cy.get('@submitButton')
             .should('contain.text', 'Register')
             .should('not.be.disabled')
-            .click();
+            .click()
 
         // Wait for the mocked signup API call
-        cy.wait('@signup').then((interception) => {
-            expect(interception.response.statusCode).to.eq(201);
-            // Verify the request body contains the expected data
-            expect(interception.request.body).to.deep.include({
-                firstName: 'TestUser',
-                lastName: 'AdminTester',
-                email: 'kemboi.brian@teach2give.com'
+        cy.wait('@signup')
+            .then((interception) => {
+                expect(interception.response.statusCode).to.eq(201);
+                // Verify the request body contains the expected data
+                expect(interception.request.body).to.deep.include({
+                    firstName: 'TestUser',
+                    lastName: 'AdminTester',
+                    email: 'kemboi.brian@teach2give.com',
+                    password: 'mypass123',
+                    confirmPassword: 'mypass123'
+                });
             });
-        });
 
         // Assert success toast
-        cy.contains(/Registration successful/i, { timeout: 10000 }).should('be.visible');
+        cy.contains(/Registration successful/i, { timeout: 10000 })
 
         // Should redirect to verification page
-        cy.url().should('include', '/register/verify');
+        cy.url().should('include', '/register/verify')
     });
 
     it("should show validation errors for empty fields", () => {
         cy.getDataTest('signup-submitbtn').as('submitButton')
         cy.get('@submitButton')
             .should('contain.text', 'Register')
-            .click();
+            .click()
 
-        cy.contains(/First name is required/i).should('be.visible');
-        cy.contains(/Last name is required/i).should('be.visible');
-        cy.contains(/Email is required/i).should('be.visible');
-        cy.contains(/Password is required/i).should('be.visible');
-        cy.contains(/Confirm password is required/i).should('be.visible');
+        cy.contains(/First name is required/i);
+        cy.contains(/Last name is required/i);
+        cy.contains(/Email is required/i);
+        cy.contains(/Password is required/i);
+        cy.contains(/Confirm password is required/i)
     });
 
     it("should show error if passwords do not match", () => {
@@ -102,14 +100,14 @@ describe("signup form tests", () => {
         cy.get('@passwordInput').type('mypass123');
 
         cy.getDataTest('signup-confirmpassword').as('confirmPasswordInput')
-        cy.get('@confirmPasswordInput').type('differentpass');
+        cy.get('@confirmPasswordInput').type('differentpass')
 
         cy.getDataTest('signup-submitbtn').as('submitButton')
         cy.get('@submitButton')
             .should('contain.text', 'Register')
-            .click();
+            .click()
 
-        cy.contains(/Passwords must match/i).should('be.visible');
+        cy.contains(/Passwords must match/i)
     });
 
 });
