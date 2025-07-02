@@ -54,6 +54,7 @@ const CreateTodos = () => {
                 <h3 className="font-bold text-lg mb-4">Create New Todo</h3>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                     <input
+                        data-test="todo-name-input"
                         type="text"
                         {...register("todoName")}
                         placeholder="Todo Name"
@@ -65,6 +66,7 @@ const CreateTodos = () => {
                     )}
 
                     <textarea
+                        data-test="todo-description-input"
                         {...register("description")}
                         placeholder="Description"
                         className="textarea textarea-bordered w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg bg-white text-gray-800"
@@ -74,6 +76,7 @@ const CreateTodos = () => {
                     )}
 
                     <input
+                        data-test="todo-userid-input"
                         type="number"
                         {...register("userId")}
                         placeholder="User ID"
@@ -85,6 +88,7 @@ const CreateTodos = () => {
                     )}
 
                     <input
+                        data-test="todo-date-input"
                         type="date"
                         {...register("dueDate")}
                         className="input rounded w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg bg-white text-gray-800"
@@ -99,6 +103,7 @@ const CreateTodos = () => {
                             <div className="flex gap-4">
                                 <label className="flex items-center gap-1">
                                     <input
+                                        data-test="todo-status-completed"
                                         type="radio"
                                         value="true"
                                         {...register("isCompleted")}
@@ -108,6 +113,7 @@ const CreateTodos = () => {
                                 </label>
                                 <label className="flex items-center gap-1">
                                     <input
+                                        data-test="todo-status-pending"
                                         type="radio"
                                         value="false"
                                         {...register("isCompleted")}
@@ -124,7 +130,11 @@ const CreateTodos = () => {
                     )}
 
                     <div className="modal-action">
-                        <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                        <button
+                            data-test="createtodo-submit-button"
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={isLoading}>
                             {isLoading ? (
                                 <>
                                     <span className="loading loading-spinner text-primary" /> Creating...
