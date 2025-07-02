@@ -16,31 +16,32 @@ const Navbar = () => {
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" data-test="todo-mobile-menu-bars">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
                         </div>
+                        {/* Mobile devices */}
                         <ul
                             // tabIndex={0}
                             className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow text-base-content bg-gray-700 h-[60vh]"
                             data-test="todo-ul-menu">
                             <ul className="menu  px-1">
                                 <li className="font-bold text-lg">
-                                    <NavLink to="/">Home</NavLink>
+                                    <NavLink to="/" data-test="mobile-nav-home">Home</NavLink>
                                     {/* <a href="/"></a> */}
                                 </li>
                                 <li className="font-bold text-lg">
-                                    <NavLink to="/about">About</NavLink>
+                                    <NavLink to="/about" data-test="mobile-nav-about">About</NavLink>
                                 </li>
 
                                 <li className="font-bold text-lg">
-                                    <NavLink to={isAdmin ? "/admin/dashboard/todos" : isUser ? "/user/dashboard/todos" : "/dashboard/analytics"}>
+                                    <NavLink to={isAdmin ? "/admin/dashboard/todos" : isUser ? "/user/dashboard/todos" : "/dashboard/analytics"} data-test="mobile-nav-dashboard">
                                         Dashboard
                                     </NavLink>
                                 </li>
                                 {!userToken && (
                                     <>
                                         <li className="font-bold text-lg">
-                                            <NavLink to="/register">Register</NavLink>
+                                            <NavLink to="/register" data-test="mobile-nav-register">Register</NavLink>
                                         </li>
                                         <li className="font-bold text-lg">
-                                            <NavLink to="/login">Login</NavLink>
+                                            <NavLink to="/login" data-test="mobile-nav-login">Login</NavLink>
                                         </li>
                                     </>
                                 )}
@@ -54,14 +55,14 @@ const Navbar = () => {
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 ">
                         <li className="font-bold text-lg">
-                            <NavLink to="/">Home</NavLink>
+                            <NavLink to="/" data-test="desktop-nav-home">Home</NavLink>
                         </li>
                         <li className="font-bold text-lg">
-                            <NavLink to="/about">About</NavLink>
+                            <NavLink to="/about" data-test="desktop-nav-about">About</NavLink>
                         </li>
                         {userToken && (
                             <li className="font-bold text-lg">
-                                <NavLink to={isAdmin ? "/admin/dashboard/todos" : isUser ? "/user/dashboard/todos" : "/dashboard/analytics"}>
+                                <NavLink to={isAdmin ? "/admin/dashboard/todos" : isUser ? "/user/dashboard/todos" : "/dashboard/analytics"} data-test="desktop-nav-dashboard">
                                     Dashboard
                                 </NavLink>
                             </li>
@@ -74,10 +75,10 @@ const Navbar = () => {
                         {!userToken && (
                             <>
                                 <li className="font-bold text-lg list-none">
-                                    <NavLink to="/register">Register</NavLink>
+                                    <NavLink to="/register" data-test="desktop-nav-register">Register</NavLink>
                                 </li>
                                 <li className="font-bold text-lg list-none">
-                                    <NavLink to="/login">Login</NavLink>
+                                    <NavLink to="/login" data-test="desktop-nav-login">Login</NavLink>
                                 </li>
                             </>
                         )}

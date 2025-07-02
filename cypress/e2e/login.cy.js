@@ -3,7 +3,7 @@ describe("form tests", () => {
         cy.visit('/login')
     })
 
-    it.only("should login with valid credentials", () => {
+    it("should login with valid credentials", () => {
         // assert that we are in the login page
         cy.contains(/Login to Your Account/i).should('be.visible')
         //Get the email input 

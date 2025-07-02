@@ -4,7 +4,7 @@ describe("signup form tests", () => {
         cy.visit('/register');
     });
 
-    it.only("should signup with valid credentials", () => {
+    it("should signup with valid credentials", () => {
         // Mock the signup API call with a successful response
         cy.intercept('POST', '/auth/register', {
             statusCode: 201,
