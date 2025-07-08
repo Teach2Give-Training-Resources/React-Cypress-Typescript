@@ -18,11 +18,19 @@ Cypress is a **next-generation front-end testing framework** designed for modern
 
 Cypress operates directly within the browser, bypassing the need for Selenium WebDriver. This unique architecture allows Cypress to listen and modify browser behavior at runtime, providing faster and more reliable test execution.
 
-![1751189307217](image/README/1751189307217.png)
+***a. Cypress Architecture***
 
-NOTE
+With Cypress, you can do Unit, Functional, Integration, End to End Testing.
+
+C***ypress Browser Support*** : Chrome, Electron( *Default* ), Chromium, Mozilla Firefox browsers ( *beta support* ) and Microsoft Edge browsers
 
 ![1751189325965](image/README/1751189325965.png)
+
+***b. Selenium Architecture***
+
+Each of the browsers has provided their drivers, which interacts with the browser instances for the execution of the commands.
+
+![1751189307217](image/README/1751189307217.png)
 
 2. ***Automatic Waiting***
 
@@ -34,7 +42,7 @@ Cypress offers  **real-time reloading** , ensuring that tests stay up-to-date wi
 
 4. ***Time-travel Debugging***
 
-Cypress includes a **time-travel debugging** feature that allows developers to step through each command in a test. This capability helps in observing the state of the application at different points in time during test execution, aiding in pinpointing and resolving issues effectively ^[1](https://www.bing.com/ck/a?!&&p=f741977d47bb29a373e17575a02f3272044b60fbe7e545cf05e47715d462876aJmltdHM9MTc1MTE1NTIwMA&ptn=3&ver=2&hsh=4&fclid=2af470c9-ce56-6753-3daa-6531cfd46668&u=a1aHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvaW50cm9kdWN0aW9uLXRvLWN5cHJlc3MtdGVzdGluZy1mcmFtZXdvcmsv&ntb=1)^ .
+Cypress includes a **time-travel debugging** feature that allows developers to step through each command in a test. This capability helps in observing the state of the application at different points in time during test execution, aiding in pinpointing and resolving issues effectively.
 
 5. ***Network Stubbing***
 
@@ -44,7 +52,9 @@ Cypress allows  **network stubbing** , enabling developers to mock server respon
 
 1. ***Test Runner***
 
-The **Test Runner** is a pivotal component of Cypress, providing a user-friendly interface for writing, managing, executing, and debugging tests. It offers real-time test execution and comprehensive error reporting, enhancing productivity and confidence in test outcomes  .
+It runs tests in a unique interactive runner that allows you to see commands as they execute while also viewing the application under test. Below are the key subcomponents of the test runner that we should pay focus while executing our test cases.
+
+![1751826092308](image/README/1751826092308.png)
 
 2. ***Cypress Dashboard***
 
@@ -60,20 +70,54 @@ Cypress differs from Selenium in several key aspects:
 
 ![1751189124403](image/README/1751189124403.png)
 
-## drawbacks of Cypress
+## Drawbacks of Cypress
 
 * It is  **relatively naive** , and it does not have the vast community that Selenium does. But in recent years, it has gained momentum, and the Cypress community is increasing at a great pace.
 * As stated earlier, it's JavaScript or bust. You will not be able to write cypress tests in the old static languages such as C# and Java. On the contrary, as these days, JavaScript is one of the biggest buzzwords for frontend developments, using the same language for test automation bridges the gap between the developers and the QAs.
 * Because it runs inside the browser, there **is no support** for **multiple** browser  **tabs or popups** . You cannot use **Cypress** to drive two browsers instances at the same time.
 * Before Cypress 4.0.0, it used to support only Chrome and Electron. **Cypress 4.0.0** includes support for **Mozilla Firefox** browsers (beta support) and **Microsoft Edge** (Chromium-based) browsers, which is a big step forward for Cross Browser Testing in Cypress.
-* No shadow DOM support. You can imagine the shadow DOM as a " **DOM within a DOM** ". It is its own isolated DOM tree with its elements and styles, completely isolated from the original DOM. Also, even Selenium does not provide explicit support for working with Shadow DOM elements.
-* It **doesn't** support native **mobile** apps, but it **does** intend to support **mobileweb browsers** in the future*.*
+* It **doesn't** support native **mobile** apps, but it **does** intend to support **mobileweb browsers** in the future
 
-## **Setting up Cpress with React-Vite with TypeScript **
+## What are the common differences between Selenium and Cypress?
 
-[stackoverflow](https://stackoverflow.com/questions/76131497/when-setting-up-cypress-configfile-is-invalid)
+![1751189429994](image/README/1751189429994.png)
 
-Rename the file ***cypress.config.ts* **to ***cypress.config.mjs***
+## Setting up Cpress with React-Vite with TypeScript
+
+**Resources**
+
+[stackoverflow](https://stackoverflow.com/questions/76131497/when-setting-up-cypress-configfile-is-invalid) |
+
+***step 1: Install Cpress as Dev dependancy***
+
+```bash
+pnpm cypress install
+```
+
+
+
+***step 2: Add Scripts to run cypress:***
+
+```json
+"cy": "cypress open",
+    "cy:run": "cypress run"
+```
+
+***step 3: Run cypress open or pnpm run cy***
+
+![1751957407382](image/README/1751957407382.png)
+
+cypress app will open up 
+
+***step 4: Select E2E Testing***
+
+![1751957574663](image/README/1751957574663.png)
+
+You will get an error that looks like this: 
+
+![1751957753338](image/README/1751957753338.png)
+
+No need to worry, just Rename the file ***cypress.config.ts* **to **cypress.config.mjs** then re-run pnpm run cy:
 
 ### Reasons
 
@@ -106,9 +150,3 @@ Why Cypress didn’t like `cypress.config.ts`
 * TypeScript files (`.ts`) are not directly understood by Node.js without being compiled or interpreted.
 * Cypress tries to `require()` the `.ts` config file (as if it's CommonJS), which **fails if you're using `export`** (ESM syntax).
 * Your `tsconfig.json` has `module: "ESNext"`, so TypeScript treated it as an ES Module, but Cypress didn’t — causing the mismatch.
-
-## What are the common differences between Selenium and Cypress?
-
-![1751189429994](image/README/1751189429994.png)
-
-.....kklk

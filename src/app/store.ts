@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage'
 import { loginAPI } from '../features/login/loginAPI'
 import userSlice from '../features/login/userSlice'
 import { todosAPI } from '../features/todos/todosAPI'
+import tokenExpirationMiddleware from '../utils/tokenExpiryMiddleware'
 
 const persistConfig = {
     key: 'root', //storage key for the persisted state
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({ //combining all reducers into one root red
     [usersAPI.reducerPath]: usersAPI.reducer,
     [loginAPI.reducerPath]: loginAPI.reducer,
     [todosAPI.reducerPath]: todosAPI.reducer,
+
     user: userSlice
 })
 
@@ -34,6 +36,7 @@ export const store = configureStore({
         .concat(usersAPI.middleware) // add the usersAPI middleware to the store - helps with caching, invalidation, polling, and other features
         .concat(loginAPI.middleware) // add the loginAPI middleware
         .concat(todosAPI.middleware) // add the todosAPI middleware
+        .concat(tokenExpirationMiddleware) // add the token expiration middleware to check if the token is expired before dispatching any action
 })
 
 export const persistedStore = persistStore(store) // needed for persisting the store to local storage

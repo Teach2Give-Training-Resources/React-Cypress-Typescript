@@ -33,6 +33,7 @@ const Todos = () => {
             <div className="flex justify-center mb-3 mt-3">
                 <button
                     className="btn bg-gray-600 text-white hover:bg-gray-700 border border-gray-400 rounded-lg px-4 py-2 text-lg"
+                    data-test="create-todo-button"
                     onClick={() => (document.getElementById('my_modal_5') as HTMLDialogElement)?.showModal()}
                 >
                     Create Todo
@@ -46,7 +47,7 @@ const Todos = () => {
 
 
             {/* Display Todos */}
-            {todosLoading && <p>Loading todos...</p>}
+            {todosLoading && <p data-test="loading-spinner">Loading todos...</p>}
             {todoError && <p className="text-red-500">Error fetching todos</p>}
             {todosData && todosData.data && todosData.data.length > 0 ? (
                 <div className="md:overflow-x-auto">
@@ -78,12 +79,16 @@ const Todos = () => {
                                     </td>
                                     {/* Actions to delete and Edit */}
                                     <td className="px-4 py-2 flex">
-                                        <button className="btn btn-sm btn-primary mr-4 text-blue-500"
+                                        <button
+                                            className="btn btn-sm btn-primary mr-4 text-blue-500"
+                                            data-test="edit-todo-button"
                                             onClick={() => handleEdit(todo)}
                                         >
                                             <FaEdit size={20} />
                                         </button>
-                                        <button className="btn btn-sm btn-danger text-red-500"
+                                        <button
+                                            className="btn btn-sm btn-danger text-red-500"
+                                            data-test="delete-todo-button"
                                             onClick={() => {
                                                 setTodoToDelete(todo);
                                                 (document.getElementById('delete_modal') as HTMLDialogElement)?.showModal();

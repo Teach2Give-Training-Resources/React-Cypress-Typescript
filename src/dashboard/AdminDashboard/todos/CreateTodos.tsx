@@ -48,7 +48,7 @@ const CreateTodos = () => {
     };
 
     return (
-        <dialog id="my_modal_5" className="modal sm:modal-middle">
+        <dialog id="my_modal_5" className="modal sm:modal-middle" data-test="create-todo-modal">
             <div className="modal-box bg-gray-600 text-white w-full max-w-xs sm:max-w-lg mx-auto rounded-lg">
 
                 <h3 className="font-bold text-lg mb-4">Create New Todo</h3>

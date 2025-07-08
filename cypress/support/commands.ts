@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-// ***********************************************
 Cypress.Commands.add('getDataTest', (dataTestSelector) => {
     return cy.get(`[data-test="${dataTestSelector}"]`)
 })
@@ -17,3 +16,16 @@ Cypress.Commands.add('loginAsAdmin', (email = 'bkemboi590@gmail.com', password =
     cy.get('body').should('contain.text', 'Welcome to your Admin dashboard') //body is the root element of the page
 
 })
+
+
+
+/* eslint-disable @typescript-eslint/no-namespace */
+export { } // means this file is a module, so we can augment the Cypress namespace
+declare global {
+    namespace Cypress {
+        interface Chainable { //means we are extending the Cypress namespace with our own custom commands
+            getDataTest(value: string): Chainable<JQuery<HTMLElement>>;
+            loginAsAdmin(email?: string, password?: string): Chainable<void>;
+        }
+    }
+} 
