@@ -8,6 +8,8 @@
 
 [Cypress Course](https://cypress-course.vercel.app/)
 
+[namespace ](https://typescript-eslint.io/rules/no-namespace/)
+
 ## What is Cypress?
 
 Cypress is a **next-generation front-end testing framework** designed for modern web applications. It allows developers to write automated tests for user interactions and backend processes, providing a comprehensive solution for end-to-end testing. Built on top of JavaScript, Cypress is particularly appealing to developers familiar with web development technologies due to its intuitive syntax and API.

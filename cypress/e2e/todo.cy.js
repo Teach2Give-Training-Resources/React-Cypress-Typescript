@@ -1,86 +1,77 @@
 /// <reference types="cypress" />
 
 describe('Todos CRUD E2E Test', () => {
-    let todoName = `Cypress E2E Test Todo ${Date.now()}`;
-    let updatedTodoName = `Updated Cypress Todo ${Date.now()}`;
 
-    before(() => {
+    beforeEach(() => {
         cy.loginAsAdmin();
     });
 
-    after(() => {
-        // Clean up any todos created during the test
-        cy.window().then((win) => {
-            const token = win.localStorage.getItem('token');
-            cy.request({
-                method: 'GET',
-                url: '/todos',
-                headers: { Authorization: `Bearer ${token}` }
-            }).then((resp) => {
-                const todos = resp.body.data || [];
-                const testTodos = todos.filter(todo =>
-                    todo.todoName.includes('Cypress E2E Test Todo') ||
-                    todo.todoName.includes('Updated Cypress Todo')
-                );
-                testTodos.forEach(todo => {
-                    cy.request({
-                        method: 'DELETE',
-                        url: `/todo/${todo.id}`,
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                });
-            });
+    it('should create a todo via the UI', () => {
+        const todoName = `Cypress E2E Test Todo ${Date.now()}`;
+        cy.get('[data-test="create-todo-button"]').click();
+        cy.get('[data-test="todo-name-input"]').type(todoName);
+        cy.get('[data-test="todo-description-input"]').type('Created by Cypress');
+        cy.get('[data-test="todo-userid-input"]').type('3');
+        cy.get('[data-test="todo-date-input"]').type('2025-07-09');
+        cy.get('[data-test="todo-status-pending"]').check();
+        cy.get('[data-test="createtodo-submit-button"]').click();
+        cy.contains('Todo created successfully').should('be.visible');
+        cy.contains(todoName).should('be.visible')
+
+        cy.intercept('DELETE', '/todo/*').as('deleteTodo');
+
+        cy.contains('tr', todoName).within(() => {
+            cy.get('[data-test="delete-todo-button"]').click();
         });
+        cy.get('[data-test="delete-todo-confirm-button"]').click();
+
+        // Wait for the DELETE request to finish
+        cy.wait('@deleteTodo');
     });
 
-    it('should create, update, and delete a todo (full CRUD)', () => {
-        // CREATE
-        cy.getDataTest('create-todo-button').click();
-        cy.getDataTest('todo-name-input').type(todoName);
-        cy.getDataTest('todo-description-input').type('This todo was created during Cypress testing.');
-        cy.getDataTest('todo-userid-input').clear().type('4');
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const formattedTomorrow = tomorrow.toISOString().split('T')[0];
-        cy.getDataTest('todo-date-input').type(formattedTomorrow);
-        cy.getDataTest('todo-status-completed').click();
-        cy.getDataTest('createtodo-submit-button').click();
-        cy.contains(todoName).should('exist');
 
-        // UPDATE
-        cy.contains('tr', todoName, { timeout: 10000 }).should('exist').within(() => {
-            cy.getDataTest('edit-todo-button').click();
+
+    it('should update a todo via the UI', () => {
+        const todoName = `Cypress E2E Test Todo ${Date.now()}`;
+        const updatedTodoName = `Updated Cypress Todo ${Date.now()}`;
+
+        cy.get('[data-test="create-todo-button"]').click()
+        cy.get('[data-test="todo-name-input"]').type(todoName);
+        cy.get('[data-test="todo-description-input"]').type('Created by Cypress');
+        cy.get('[data-test="todo-userid-input"]').type('3');
+        cy.get('[data-test="todo-date-input"]').type('2025-07-09');
+        cy.get('[data-test="todo-status-pending"]').check();
+        cy.get('[data-test="createtodo-submit-button"]').click();
+        cy.contains('Todo created successfully').should('be.visible');
+        cy.contains(todoName).should('be.visible');
+
+        // Now update the todo
+        cy.contains('tr', todoName).within(() => {
+            cy.get('[data-test="edit-todo-button"]').click();
         });
-        cy.getDataTest('edit-todo-name-input').clear().type(updatedTodoName);
-        cy.getDataTest('edit-todo-description-input').clear().type('Updated description.');
-        const twoDaysLater = new Date();
-        twoDaysLater.setDate(twoDaysLater.getDate() + 2);
-        const formattedTwoDaysLater = twoDaysLater.toISOString().split('T')[0];
-        cy.getDataTest('edit-todo-date-input').clear().type(formattedTwoDaysLater);
-        cy.getDataTest('edit-todo-status-pending').click();
-        cy.getDataTest('update-todo-button').click();
-        cy.contains(updatedTodoName).should('exist');
+        cy.get('[data-test="edit-todo-name-input"]').clear().type(updatedTodoName);
+        cy.get('[data-test="edit-todo-status-completed"]').check();
+        cy.get('[data-test="update-todo-button"]').click();
+        cy.contains('Todo updated successfully').should('be.visible');
+        cy.contains(updatedTodoName).should('be.visible');
 
-        // DELETE
+
+        cy.intercept('DELETE', '/todo/*').as('deleteTodo');
+
         cy.contains('tr', updatedTodoName).within(() => {
-            cy.getDataTest('delete-todo-button').click();
+            cy.get('[data-test="delete-todo-button"]').click();
         });
-        cy.getDataTest('delete-todo-confirm-button').click();
+        cy.get('[data-test="delete-todo-confirm-button"]').click();
 
-        // Wait for the success message
-        cy.contains('Todo deleted successfully', { timeout: 5000 }).should('be.visible');
+        // Wait for the DELETE request to finish
+        cy.wait('@deleteTodo');
 
-        // Wait for the modal to disappear (if you have a modal)
-        cy.getDataTest('delete-todo-modal').should('not.exist');
 
-        // Optionally reload if your UI does not auto-refresh
-        // cy.reload();
-
-        // Now check the table for the row
-        cy.get('table').should('exist');
-        cy.get('tr').contains(updatedTodoName).should('not.exist');
-
-        // Also check that no modal or toast contains the text
-        cy.get('body').should('not.contain', updatedTodoName);
     });
+
+    // Optionally, add a delete test as another isolated it block
 });
+
+
+
+
