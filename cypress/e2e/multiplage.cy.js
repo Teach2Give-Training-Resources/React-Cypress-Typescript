@@ -24,7 +24,6 @@ describe("navigating the navigation bar", () => {
         cy.visit('/');
         cy.getDataTest("desktop-nav-login").click();
         cy.location("pathname").should("equal", "/login");
-
     })
 
 

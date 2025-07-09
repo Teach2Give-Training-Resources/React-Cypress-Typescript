@@ -3,6 +3,7 @@
 describe('Todos CRUD E2E Test', () => {
 
     beforeEach(() => {
+         cy.viewport(1920, 900);
         cy.loginAsAdmin();
     });
 
@@ -18,7 +19,8 @@ describe('Todos CRUD E2E Test', () => {
         cy.contains('Todo created successfully').should('be.visible');
         cy.contains(todoName).should('be.visible')
 
-        cy.intercept('DELETE', '/todo/*').as('deleteTodo');
+        //spying on the DELETE request
+        cy.intercept('DELETE', '/todo/*').as('deleteTodo'); 
 
         cy.contains('tr', todoName).within(() => {
             cy.get('[data-test="delete-todo-button"]').click();
@@ -65,11 +67,7 @@ describe('Todos CRUD E2E Test', () => {
 
         // Wait for the DELETE request to finish
         cy.wait('@deleteTodo');
-
-
     });
-
-    // Optionally, add a delete test as another isolated it block
 });
 
 

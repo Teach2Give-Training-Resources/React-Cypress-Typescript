@@ -21,11 +21,31 @@ Cypress.Commands.add('loginAsAdmin', (email = 'bkemboi590@gmail.com', password =
 
 /* eslint-disable @typescript-eslint/no-namespace */
 export { } // means this file is a module, so we can augment the Cypress namespace
-declare global {
-    namespace Cypress {
+declare global { // adding new types to the global scope.
+    namespace Cypress { //adding to the Cypress types
         interface Chainable { //means we are extending the Cypress namespace with our own custom commands
             getDataTest(value: string): Chainable<JQuery<HTMLElement>>;
-            loginAsAdmin(email?: string, password?: string): Chainable<void>;
+            loginAsAdmin(email: string, password: string): Chainable<void>;
         }
     }
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
